@@ -42,7 +42,7 @@
                if (isset($_GET['post_id'])) {
 
                    
-                   $sql = "SELECT * FROM posts WHERE posts.id = {$_GET['post_id']};";
+                   $sql = "SELECT * FROM posts WHERE ID = {$_GET['post_id']};";
                    $statement = $connection->prepare($sql);
                    $statement->execute();
                    $statement->setFetchMode(PDO::FETCH_ASSOC);
@@ -55,10 +55,11 @@
               <p class="blog-post-meta"><?php echo($singlePost['Created_at']) ?><?php echo($singlePost['Author']) ?></a></p>
 
               <p><?php echo($singlePost['Body']) ?></p>
+              <button type="button" class="btn btn-primary btn-md" onclick="promptMe()">delete post</button>
               <hr>
              
           </div>
-
+         
           
 
            <nav class="blog-pagination">
@@ -72,14 +73,25 @@
                    echo('post_id nije prosledjen kroz $_GET');
                }
            ?>
+          
+         <form action="create-comment.php" method="POST">
 
-           <button onclick="myFunction()">Hide comments</button>
-               <h3>comments</h3>
+          <h5>add comment</h5>
+          <input type="Text" id="Author" placeholder="name"/></br></br>
+          <textarea name="text" rows='5' cols='28' placeholder="Comment"></textarea><br>
 
+           <button type="Submit">Send</button><br>
+           <input type="Hidden" name="post_id" value="<?php echo ($_GET['post_id']); ?>">
 
-           <div id="hiden" class="comments">
+         </form>
+ 
+         <hr>
 
+          <button id="HideShow" onclick="myFunction()">hide comment<script type="text/javascript"></script></button>
+           <div id="comment" class="comments">
+  
         
+
          <?php 
 
          $sql = "SELECT *FROM comments ORDER BY comments.post_id";
@@ -96,8 +108,8 @@
            <ul>
               <li><?php echo($comment['Text']) ?></li>
 
-              <li>autor:<?php echo($comment['Author']) ?></li>
-
+              <li>autor:<?php echo($comment['Author']) ?></li></br>
+              <button type="button" class="btn btn-primary btn-md">delete comment</button>
               <hr>
             </ul>  
        

@@ -30,3 +30,8 @@ a:hover{
 	color:#b34848;
 	text-decoration: underline;
 }
+
+form.NewPost{
+
+	text-align: center;
+}
